@@ -6,6 +6,7 @@ from dragger import Dragger
 
 class Game:
     def __init__(self):
+        self.next_player = "w"
         self.board = Board()
         self.dragger = Dragger()
 
@@ -54,3 +55,6 @@ class Game:
                     SQSIZE,
                 )
                 p.draw.rect(surface, color, rect)
+
+    def next_turn(self):
+        self.next_player = "w" if self.next_player == "b" else "b"
