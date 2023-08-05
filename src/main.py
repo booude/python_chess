@@ -82,6 +82,11 @@ class Main:
                             game.next_turn()
                     dragger.undrag_piece()
 
+                elif event.type == p.KEYDOWN:
+
+                    if event.key == p.K_t:
+                        game.change_theme()
+
                 elif event.type == p.QUIT:
                     p.quit()
                     sys.exit()
