@@ -75,11 +75,14 @@ class Main:
                         move = Move(initial, final)
 
                         if board.valid_move(dragger.piece, move):
+                            captured = board.squares[released_row][released_col].has_piece()
                             board.move(dragger.piece, move)
+                            game.play_sound(captured)
                             game.show_bg(screen)
                             game.show_last_move(screen)
                             game.show_pieces(screen)
                             game.next_turn()
+
                     dragger.undrag_piece()
 
                 elif event.type == p.KEYDOWN:
