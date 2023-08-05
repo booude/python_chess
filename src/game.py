@@ -110,3 +110,5 @@ class Game:
             self.config.capture_sound.play()
         else:
             self.config.move_sound.play()
+    def reset(self):
+        self.__init__()
