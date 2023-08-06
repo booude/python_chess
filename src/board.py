@@ -111,21 +111,34 @@ class Board:
                         else:
                             piece.add_move(move)
 
-                r = 3 if piece.color == "w" else 4
-                fr = 2 if piece.color == "w" else 5
-                if Square.in_range(col + 1, col - 1) and row == r:
-                    if self.squares[row][col - 1].has_rival_piece(piece.color):
-                        p = self.squares[row][row - 1].piece
-                        if isinstance(p, Pawn):
-                            if p.en_passant:
-                                initial = Square(row, col)
-                                final = Square(fr, col - 1, p)
-                                move = Move(initial, final)
-                                if bool:
-                                    if not self.in_check(piece, move):
-                                        piece.add_move(move)
-                                else:
+            r = 3 if piece.color == "w" else 4
+            fr = 2 if piece.color == "w" else 5
+            if Square.in_range(col - 1) and row == r:
+                if self.squares[row][col - 1].has_rival_piece(piece.color):
+                    p = self.squares[row][col - 1].piece
+                    if isinstance(p, Pawn):
+                        if p.en_passant:
+                            initial = Square(row, col)
+                            final = Square(fr, col - 1, p)
+                            move = Move(initial, final)
+                            if bool:
+                                if not self.in_check(piece, move):
                                     piece.add_move(move)
+                            else:
+                                piece.add_move(move)
+            if Square.in_range(col + 1) and row == r:
+                if self.squares[row][col + 1].has_rival_piece(piece.color):
+                    p = self.squares[row][col + 1].piece
+                    if isinstance(p, Pawn):
+                        if p.en_passant:
+                            initial = Square(row, col)
+                            final = Square(fr, col + 1, p)
+                            move = Move(initial, final)
+                            if bool:
+                                if not self.in_check(piece, move):
+                                    piece.add_move(move)
+                            else:
+                                piece.add_move(move)
 
         def straightline_moves(incrs):
             for incr in incrs:

@@ -52,7 +52,7 @@ class Main:
                 elif event.type == p.MOUSEMOTION:
                     motion_row = event.pos[1] // SQSIZE
                     motion_col = event.pos[0] // SQSIZE
-                    
+
                     game.set_hover(motion_row, motion_col)
 
                     if dragger.dragging:
@@ -88,7 +88,6 @@ class Main:
                     dragger.undrag_piece()
 
                 elif event.type == p.KEYDOWN:
-
                     if event.key == p.K_t:
                         game.change_theme()
 
