@@ -40,7 +40,7 @@ class Main:
                     if board.squares[clicked_row][clicked_col].has_piece():
                         piece = board.squares[clicked_row][clicked_col].piece
                         if piece.color == game.next_player:
-                            board.calc_moves(piece, clicked_row, clicked_col)
+                            board.calc_moves(piece, clicked_row, clicked_col, bool=True)
                             dragger.save_initial(event.pos)
                             dragger.drag_piece(piece)
 
@@ -75,7 +75,9 @@ class Main:
                         move = Move(initial, final)
 
                         if board.valid_move(dragger.piece, move):
-                            captured = board.squares[released_row][released_col].has_piece()
+                            captured = board.squares[released_row][
+                                released_col
+                            ].has_piece()
                             board.move(dragger.piece, move)
                             game.play_sound(captured)
                             game.show_bg(screen)
