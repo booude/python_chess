@@ -1,8 +1,10 @@
+import os
 import copy
 from const import *
 from square import Square
 from piece import *
 from move import Move
+from sound import Sound
 
 
 class Board:
@@ -13,14 +15,23 @@ class Board:
         self._add_pieces("w")
         self._add_pieces("b")
 
-    def move(self, piece, move):
+    def move(self, piece, move, testing=False):
         initial = move.initial
         final = move.final
+
+        en_passant_empty = self.squares[final.row][final.col].isempty()
 
         self.squares[initial.row][initial.col].piece = None
         self.squares[final.row][final.col].piece = piece
 
         if isinstance(piece, Pawn):
+            diff = final.col - initial.col
+            if diff != 0 and en_passant_empty:
+                self.squares[initial.row][initial.col + diff].piece = None
+                self.squares[final.row][final.col].piece = piece
+                if not testing:
+                    sound = Sound(os.path.join("assets/sounds/capture.wav"))
+                    sound.play()
             if self.en_passant(initial, final):
                 piece.en_passant = True
             else:
@@ -54,7 +65,7 @@ class Board:
     def in_check(self, piece, move):
         temp_piece = copy.deepcopy(piece)
         temp_board = copy.deepcopy(self)
-        temp_board.move(temp_piece, move)
+        temp_board.move(temp_piece, move, testing=True)
 
         for row in range(ROWS):
             for col in range(COLS):
